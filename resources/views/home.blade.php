@@ -1,39 +1,49 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Каталог товаров</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container">
-        <h1>Все товары</h1>
+@extends('layout.main')
 
-        <table class="table">
-            <thead>
-                <th>Название</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th></th>
-            </thead>
-            <tbody>
-                @foreach($products as $product)
-                    <form action="/basket" method="post">
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <tr>
-                        <td>{{ $product->title }}</td>
-                        <td>{{ $product->price }} р.</td>
-                        <td><input name="count" type="number" min="1" value="1"> </td>
-                        <td>
-                            <input type="submit" class="btn btn-primary" value="Добавить в корзину">
-                        </td>
-                    </tr>
-                    </form>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
+@section('content')
+    <h1>Все товары</h1>
+
+    <table class="table">
+        <thead>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th></th>
+        </thead>
+        <tbody>
+        @foreach($products as $product)
+            <form id="basket-form" action="#" onsubmit="return addToBasket({{ $product->id }});">
+                <tr>
+                    <td>{{ $product->title }}</td>
+                    <td><span id="price-{{ $product->id }}">{{ $product->price }}</span> р.</td>
+                    <td><input id="count-{{ $product->id }}" name="count" type="number" min="1" value="1"> </td>
+                    <td>
+                        <input type="submit" class="btn btn-outline-primary" value="Добавить в корзину">
+                    </td>
+                </tr>
+            </form>
+        @endforeach
+        </tbody>
+    </table>
+    <script>
+        function addToBasket(productId)
+        {
+            let product = localStorage.getItem('product-' + productId);
+            if (!product) {
+                product = {
+                    id: productId,
+                    count: document.getElementById('count-' + productId).value,
+                    price: document.getElementById('price-' + productId).innerHTML
+                };
+            } else {
+                product = JSON.parse(product);
+                product.count = parseInt(product.count) + parseInt(document.getElementById('count-' + productId).value);
+            }
+            localStorage.setItem('product-' + productId, JSON.stringify(product));
+
+            window.location = '/basket';
+
+            return false;
+        }
+    </script>
+@endsection
