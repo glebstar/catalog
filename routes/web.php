@@ -20,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/basket', [App\Http\Controllers\HomeController::class, 'basket'])->name('basket');
 Route::post('/order', [App\Http\Controllers\HomeController::class, 'addOrder'])->name('order');
+Route::get('/orders', [App\Http\Controllers\HomeController::class, 'orders'])->name('orders');

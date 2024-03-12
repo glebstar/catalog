@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\OrderRequest;
 use App\Models\Product;
 
 class HomeController extends Controller
@@ -21,8 +21,15 @@ class HomeController extends Controller
         ]);
     }
 
-    public function addOrder(Request $request)
+    public function addOrder(OrderRequest $request): \Illuminate\Http\JsonResponse
     {
-        var_dump($request->user); exit;
+        return response()->json([
+            'status' => 'ok'
+        ]);
+    }
+
+    public function orders()
+    {
+
     }
 }

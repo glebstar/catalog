@@ -50,18 +50,26 @@
     <script>
         function addOrder()
         {
+            $('#btnOrder').hide();
             $.post('/order', {
                 _token: '{{ csrf_token() }}',
                 user: currentUser,
                 products: products
-            }, function (data){
-                if (data.status == 'ok') {
-                    localStorage.clear();
-                    window.location = '/orders';
-                } else {
-                    alert(data.message);
-                }
-            }, 'json');
+            }, 'json')
+                .done(function(data){
+                    if (data.status == 'ok') {
+                        //localStorage.clear();
+                        //window.location = '/orders';
+                    } else {
+                        alert(data.message);
+                    }
+                    console.log(data);
+                })
+                .fail(function(xhr, status, error) {
+                    alert('Ошибка при добавлении заказа');
+                    $('#btnOrder').show();
+                });
+
             return false;
         }
     </script>
