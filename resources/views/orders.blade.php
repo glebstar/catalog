@@ -8,9 +8,7 @@
         <th>Название</th>
         <th>Сумма</th>
         </thead>
-        <tbody id="tbody">
-
-        </tbody>
+        <tbody id="tbody"></tbody>
         <tfoot>
         <tr>
             <td colspan="3" style="text-align: right;">Итого: <span id="comPrice">0</span> р.</td>

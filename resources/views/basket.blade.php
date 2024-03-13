@@ -21,9 +21,7 @@
             <th>Название</th>
             <th>Количество</th>
         </thead>
-        <tbody id="tbody">
-
-        </tbody>
+        <tbody id="tbody"></tbody>
         <tfoot>
             <tr>
                 <td colspan="2" style="text-align: right;">Общая стоимость: <span id="comPrice">0</span> р.
