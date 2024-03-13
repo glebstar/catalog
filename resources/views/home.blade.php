@@ -41,7 +41,7 @@
             }
             localStorage.setItem('product-' + productId, JSON.stringify(product));
 
-            window.location = '/basket';
+            alert('Товар добавлен в корзину');
 
             return false;
         }

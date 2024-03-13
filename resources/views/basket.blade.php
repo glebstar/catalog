@@ -36,7 +36,7 @@
         let comPrice = 0;
         for(let i=0;i<products.length;i++) {
             tbody.insertAdjacentHTML('beforeend', '<tr><td>' + products[i].title + '</td><td>' + products[i].count + '</td></tr>');
-            comPrice = parseInt(comPrice) + (parseFloat(products[i].price) * parseInt(products[i].count));
+            comPrice = parseFloat(comPrice) + (parseFloat(products[i].price) * parseInt(products[i].count));
         }
 
         if (comPrice > 0) {
@@ -58,12 +58,15 @@
             }, 'json')
                 .done(function(data){
                     if (data.status == 'ok') {
-                        //localStorage.clear();
-                        //window.location = '/orders';
+                        currentUser = localStorage.getItem('currentUser');
+                        localStorage.clear();
+                        localStorage.setItem('currentUser', currentUser);
+                        alert('Заказ успешно создан');
+                        window.location = '/orders';
                     } else {
-                        alert(data.message);
+                        alert('Ошибка при добавлении заказа');
+                        $('#btnOrder').show();
                     }
-                    console.log(data);
                 })
                 .fail(function(xhr, status, error) {
                     alert('Ошибка при добавлении заказа');
